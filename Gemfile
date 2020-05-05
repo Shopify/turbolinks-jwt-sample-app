@@ -50,4 +50,4 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'shopify_app', '>=11.3.0'
+gem 'shopify_app', github: 'Shopify/shopify_app', branch: 'master'
