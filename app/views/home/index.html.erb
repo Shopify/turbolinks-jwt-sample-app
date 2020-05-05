@@ -1,0 +1,21 @@
+<h2>Products</h2>
+
+<ul>
+  <% @products.each do |product| %>
+    <li><%= link_to product.title, "https://#{@current_shopify_session.domain}/admin/products/#{product.id}", target: "_top" %></li>
+  <% end %>
+</ul>
+
+<hr>
+
+<h2>Webhooks</h2>
+
+<% if @webhooks.present? %>
+  <ul>
+    <% @webhooks.each do |webhook| %>
+      <li><%= webhook.topic %> : <%= webhook.address %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>This app has not created any webhooks for this Shop. Add webhooks to your ShopifyApp initializer if you need webhooks</p>
+<% end %>
