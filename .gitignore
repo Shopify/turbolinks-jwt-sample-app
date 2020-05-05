@@ -35,5 +35,8 @@
 yarn-debug.log*
 .yarn-integrity
 
+# Ignore .env with secret
+/.env
+
 # RubyMine
 /.idea
