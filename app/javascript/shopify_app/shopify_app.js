@@ -41,3 +41,10 @@ document.addEventListener("turbolinks:request-start", function(event) {
   var xhr = event.data.xhr;
   xhr.setRequestHeader("Authorization", "Bearer " + window.sessionToken);
 });
+
+document.addEventListener("turbolinks:render", function() {
+  $('form, a[data-method=delete]').on('ajax:beforeSend', function(event) {
+    const xhr = event.detail[0];
+    xhr.setRequestHeader("Authorization", "Bearer " + window.sessionToken);
+  });
+});

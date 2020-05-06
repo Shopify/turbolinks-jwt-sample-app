@@ -1,5 +1,6 @@
 class WidgetsController < AuthenticatedController
   before_action :set_widget, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token, if: :jwt_shopify_domain
 
   # GET /widgets
   # GET /widgets.json

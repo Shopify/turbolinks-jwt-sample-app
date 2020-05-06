@@ -18,7 +18,7 @@
         <td><%= widget.size %></td>
         <td><%= link_to 'Show', widget %></td>
         <td><%= link_to 'Edit', edit_widget_path(widget) %></td>
-        <td><%= link_to 'Destroy', widget, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', widget, method: :delete, data: { confirm: 'Are you sure?', remote: true } %></td>
       </tr>
     <% end %>
   </tbody>
