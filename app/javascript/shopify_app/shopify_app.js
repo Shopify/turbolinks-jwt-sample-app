@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Wait for the token before trying to load an authenticated page
   await retrieveToken(app);
-  Turbolinks.visit("/home");
+  Turbolinks.visit(data.loadPath);
 
   // Keep requesting the token every 50 seconds (I don't think we can wait for the token inline in request-start
   // event listener)
