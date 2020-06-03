@@ -839,6 +839,18 @@
     webpack-cli "^3.3.10"
     webpack-sources "^1.4.3"
 
+"@shopify/app-bridge-utils@1.22.0":
+  version "1.22.0"
+  resolved "https://registry.yarnpkg.com/@shopify/app-bridge-utils/-/app-bridge-utils-1.22.0.tgz#8e4c2bb2c26a04cae0a3f61ec7f8c6592f2762b6"
+  integrity sha512-XY5petRpGKQ2dS9i9ACVEt9BTzYwbvHN4Q03sRUAxOpkCJ7KWOT/u215/auqC/EdXact8U4zNfGbbTiiwpKsbA==
+  dependencies:
+    "@shopify/app-bridge" "^1.22.0"
+
+"@shopify/app-bridge@^1.22.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@shopify/app-bridge/-/app-bridge-1.23.0.tgz#7c71ae3770f354d4cc8bd5908284d66483a6f7e6"
+  integrity sha512-UTEHRv3pYYU+YOJpiLKPB8CIL73hsh0Kl+PVD0NCOu44NCHoxKe5B8g29ti/TKNs5+LerATMJfjGZuPRTNr2yA==
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
