@@ -105,7 +105,13 @@ ShopifyAPI::Session.myshopify_domain = ENV['SHOPIFY_DOMAIN']
 
 * `load_path` gives your app some place to redirect to once a Session Token is received
 
-2. Assuming your `shopify_app` gem is updated to at least release
+2. In `config/initializers/omniauth.rb` add:
+
+```rb
+strategy.options[:myshopify_domain] = ENV['SHOPIFY_DOMAIN']
+```
+
+3. Assuming your `shopify_app` gem is updated to at least release
 [`13.3.0`][5], ensure that `app/controllers/application_controller.rb`
 resembles the following:
 
@@ -124,7 +130,7 @@ end
 * `ApplicationController` validates the shop through `ShopifyApp::RequireKnownShop`. If
 the shop does not have the app installed, it will trigger the install flow.
 
-3. Create a new view `app/views/application/index.html.erb`. This will be the
+4. Create a new view `app/views/application/index.html.erb`. This will be the
 view that is rendered during the time it takes your app to fetch the Session
 Token.
 
@@ -143,6 +149,10 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
 ```
+
+5. You should be able to install your app to your Shopify store as normal.
+The [following guide][8] has instructions on how to do this.
+
 
 ### Fetching a session token
 
@@ -239,3 +249,4 @@ This helps ensure your subsequent requests to protected resources are authorized
 [5]: https://github.com/Shopify/shopify_app/releases/tag/v13.3.0
 [6]: https://www.npmjs.com/package/@shopify/app-bridge/v/1.22.0
 [7]: https://shopify.dev/tutorials/build-a-shopify-app-with-node-and-react/embed-your-app-in-shopify#get-a-shopify-api-key
+[8]: https://shopify.dev/tutorials/build-a-shopify-app-with-node-and-express#step-2-create-and-configure-your-app-in-the-partner-dashboard
