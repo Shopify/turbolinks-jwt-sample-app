@@ -15,12 +15,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     title: data.page,
   });
 
-  // Wait for the token before trying to load an authenticated page
+  // Wait for a session token before trying to load an authenticated page
   await retrieveToken(app);
+
+  // Redirect to the requested page
   Turbolinks.visit(data.loadPath);
 
-  // Keep requesting the token every 50 seconds (I don't think we can wait for the token inline in request-start
-  // event listener)
+  // Keep retrieving a session token periodically
   keepRetrievingToken(app);
 });
 
