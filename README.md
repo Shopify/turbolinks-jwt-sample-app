@@ -12,6 +12,7 @@
     * [Creating a splash page](#creating-a-splash-page)
     * [Fetching and storing session tokens](#fetching-and-storing-session-tokens)
     * [Requesting authenticated resources](#requesting-authenticated-resources)
+    * [Marking shops as uninstalled on app/uninstalled webhook](#marking-shops-as-uninstalled-on-appuninstalled-webhook)
 
 ## Use Turbolinks to convert a multi-page app
 
@@ -330,6 +331,65 @@ end
 
 5. Your app is now able to access the authenticated `ProductsController` from the `HomeController` using session tokens.
 
+### Marking shops as uninstalled on app/uninstalled webhook
+
+To ensure OAuth continues to work with session tokens, your app must update its shop records in the event a shop uninstalls your app. The app can receive notifications of these events by subscribing to the `app/uninstall` [webhook](https://shopify.dev/docs/admin-api/rest/reference/events/webhook).
+
+#### Setup app/uninstall webhook
+1. Use the [`add_webhook` generator from the shopify_app gem](https://github.com/Shopify/shopify_app#webhooksmanager) to setup the `app/uninstalled` webhook for the app.
+
+```shell script
+rails g shopify_app:add_webhook -t app/uninstalled -a {your_app_url}/webhooks/app_uninstalled
+```
+
+This will add the `app/uninstalled` webhook to your app config and create the `AppUninstalledJob` job class for you to add uninstallation handler logic.  
+
+2. Update the `AppUninstalledJob` job class to mark the Shop record as uninstalled.
+
+```ruby
+class AppUninstalledJob < ActiveJob::Base
+  def perform(args)
+    shop = Shop.find_by(shopify_domain: args[:shop_domain])
+
+    mark_shop_as_uninstalled(shop)
+  end
+
+  private
+
+  def mark_shop_as_uninstalled(shop)
+    shop.destroy! if shop
+  end
+end
+```
+
+In this example, the app marks the shop as uninstalled by deleting the Shop record.
+
+3. Define a background job to ensure shops with existing installations of the app also have the uninstall webhook set up.  
+In this app, the `RegisterWebhooksForActiveShop` job is defined to iterate all shop records in the database and configure the webhooks.
+
+```ruby
+class RegisterWebhooksForActiveShops < ApplicationJob
+  queue_as :default
+
+  def perform
+    register_webhooks_for_active_shops
+  end
+
+  private
+
+  def register_webhooks_for_active_shops
+    Shop.find_each do |shop|
+      ShopifyApp::WebhooksManagerJob.perform_now(
+        shop_domain: shop.shopify_domain,
+        shop_token: shop.shopify_token,
+        webhooks: ShopifyApp.configuration.webhooks
+      )
+    end
+  end
+end
+```
+
+Enqueue the `RegisterWebhooksForActiveShops` background job to apply the webhook registration. For details on enqueuing `ActiveJobs` on Rails, please refer to the [Rails guides](https://edgeguides.rubyonrails.org/active_job_basics.html).
 
 [//]: # "Links"
 [s1]: public/screenshot-1.png
