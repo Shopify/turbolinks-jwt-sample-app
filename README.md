@@ -80,7 +80,7 @@ To use session tokens with your multi-page app using Turbolinks, we suggest impl
     3. Install event listeners to set an `"Authorization": "Bearer <session token>"` request header on the following events:
         1. `turbolinks:request-start`
         2. `turbolinks:render`
-3. Install a timed event that continues to retrieve and cache session tokens every 50 seconds or so.
+3. Install a timed event that continues to retrieve and cache session tokens every 2 seconds.
    * This will ensure that your session tokens are always valid.
 4. Use Turbolinks to navigate to your app's authenticated home page or resource.
 
@@ -205,7 +205,7 @@ When users visit the app for the first time, they will be presented with the loa
 import { getSessionToken } from "@shopify/app-bridge-utils";
 ```
 
-3. Write a method in `shopify_app.js` that fetches and stores a session token and another to repeat this every 50 seconds.
+3. Write a method in `shopify_app.js` that fetches and stores a session token and another to repeat this every 2 seconds.
 
 ```js
 async function retrieveToken(app) {
@@ -215,7 +215,7 @@ async function retrieveToken(app) {
 function keepRetrievingToken(app) {
   setInterval(() => {
     retrieveToken(app);
-  }, 50000);
+  }, 2000);
 }
 ```
 
@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 ```
 
 * After a session token is retrieved, `Turbolinks.visit(data.loadPath)` visits the `load_path` param defined in `embedded_app.html.erb`.
-* Your app continues to retrieve session tokens every 50 seconds or so.
+* Your app continues to retrieve session tokens every 2 seconds.
 
 
 ### Requesting authenticated resources
