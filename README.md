@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 ```
 
 * After a session token is retrieved, `Turbolinks.visit(data.loadPath)` visits the `load_path` param defined in `embedded_app.html.erb`.
-* Your app continues to retrieve session tokens every 2 seconds.
+* Your app continues to retrieve session tokens every 2 seconds. This is to ensure that a stale or nearly expired token is not received.
 
 
 ### Requesting authenticated resources
