@@ -11,6 +11,9 @@ ShopifyApp.configure do |config|
   config.shop_session_repository = 'Shop'
   config.allow_jwt_authentication = true
   config.myshopify_domain = ENV['SHOPIFY_DOMAIN']
+  config.webhooks = [
+    {topic: 'app/uninstalled', address: "#{ENV['APP_URL']}/webhooks/app_uninstalled", format: 'json'},
+  ]
 end
 
 ShopifyAPI::Session.myshopify_domain = ENV['SHOPIFY_DOMAIN']
