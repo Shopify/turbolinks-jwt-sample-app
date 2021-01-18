@@ -1,6 +1,20 @@
 import { getSessionToken } from "@shopify/app-bridge-utils";
 
 document.addEventListener("DOMContentLoaded", async () => {
+  const origOpen = XMLHttpRequest.prototype.open;
+
+  XMLHttpRequest.prototype.open = function() {
+    this.addEventListener('load', function() {
+      const parsedUrl = new URL(this.responseURL);
+      const return_to_param = parsedUrl.searchParams.get('return_to');
+
+      if (return_to_param) {
+        Turbolinks.visit(return_to_param);
+      }
+    });
+    origOpen.apply(this, arguments);
+  };
+
   var data = document.getElementById("shopify-app-init").dataset;
   var AppBridge = window["app-bridge"];
   var createApp = AppBridge.default;
