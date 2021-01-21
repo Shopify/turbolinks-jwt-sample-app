@@ -1,8 +1,6 @@
-import { getSessionToken } from "@shopify/app-bridge-utils";
-
-document.addEventListener("DOMContentLoaded", async () => {
-  var data = document.getElementById("shopify-app-init").dataset;
-  var AppBridge = window["app-bridge"];
+document.addEventListener('DOMContentLoaded', () => {
+  var data = document.getElementById('shopify-app-init').dataset;
+  var AppBridge = window['app-bridge'];
   var createApp = AppBridge.default;
   window.app = createApp({
     apiKey: data.apiKey,
@@ -13,36 +11,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   var TitleBar = actions.TitleBar;
   TitleBar.create(app, {
     title: data.page,
-  });
-
-  // Wait for a session token before trying to load an authenticated page
-  await retrieveToken(app);
-
-  // Redirect to the requested page
-  Turbolinks.visit(data.loadPath);
-
-  // Keep retrieving a session token periodically
-  keepRetrievingToken(app);
-});
-
-async function retrieveToken(app) {
-  window.sessionToken = await getSessionToken(app);
-}
-
-function keepRetrievingToken(app) {
-  setInterval(() => {
-    retrieveToken(app);
-  }, 50000);
-}
-
-document.addEventListener("turbolinks:request-start", function (event) {
-  var xhr = event.data.xhr;
-  xhr.setRequestHeader("Authorization", "Bearer " + window.sessionToken);
-});
-
-document.addEventListener("turbolinks:render", function () {
-  $("form, a[data-method=delete]").on("ajax:beforeSend", function (event) {
-    const xhr = event.detail[0];
-    xhr.setRequestHeader("Authorization", "Bearer " + window.sessionToken);
   });
 });
