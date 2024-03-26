@@ -135,6 +135,7 @@ GEM
     marcel (1.0.1)
     method_source (1.0.0)
     mini_mime (1.1.0)
+    mini_portile2 (2.6.1)
     minitest (5.14.4)
     mocha (1.13.0)
     msgpack (1.4.2)
@@ -142,7 +143,8 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     nio4r (2.5.8)
-    nokogiri (1.12.2-x86_64-darwin)
+    nokogiri (1.12.2)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
@@ -270,7 +272,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
-  x86_64-darwin-20
+  ruby
 
 DEPENDENCIES
   bootsnap (>= 1.4.2)
@@ -292,8 +294,5 @@ DEPENDENCIES
   webdrivers
   webpacker (~> 4.0)
 
-RUBY VERSION
-   ruby 3.0.2p107
-
 BUNDLED WITH
-   2.2.22
+   2.5.7
