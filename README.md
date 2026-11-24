@@ -1,3 +1,5 @@
+> **This repository is no longer maintained.** It has been archived and receives no updates or security fixes.
+
 # App Bridge Authentication
 
 A demo app created using Rails, App Bridge, and Turbolinks for the Shopify tutorial [Authenticate server-side rendered apps with session tokens using App Bridge](https://shopify.dev/tutorials/authenticate-server-side-rendered-apps-with-session-tokens-app-bridge-turbolinks).
